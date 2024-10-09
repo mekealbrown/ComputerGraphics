@@ -1,8 +1,12 @@
-
+#include <cmath>
+#include <iomanip>
+#include <iostream>
 
 #include "transforms.hpp"
 
-
+//----------------------------------------------------------------
+// This function populates a 3x1 matrix.
+//----------------------------------------------------------------
 void pop_vec(std::vector<float>& vec, const float x, const float y)
 {
   vec.push_back(x);
@@ -10,7 +14,10 @@ void pop_vec(std::vector<float>& vec, const float x, const float y)
   vec.push_back(1.0);
 }
 
-//TODO: ADD BOX COMMENT
+//----------------------------------------------------------------
+// This function takes in a 3x3 matrix and a 3x1 matrix and 
+// multiplies them together, returning the resulting 3x1.
+//----------------------------------------------------------------
 std::vector<float> matrixMultiply(const std::vector<std::vector<float>>& mx_1, const std::vector<float>& mx_2)
 {
   std::vector<float> new_vec;
@@ -25,7 +32,10 @@ std::vector<float> matrixMultiply(const std::vector<std::vector<float>>& mx_1, c
   return new_vec;
 }
 
-//TODO: ADD BOX COMMENT
+//----------------------------------------------------------------
+// This function populates the 3x3 and 3x1 matrices required to 
+// compute a translation.
+//----------------------------------------------------------------
 std::vector<float> translate(const float x, const float y, const float x_off, const float y_off)
 {
   std::vector<std::vector<float>> matrix = {
@@ -40,8 +50,11 @@ std::vector<float> translate(const float x, const float y, const float x_off, co
   return matrixMultiply(matrix, vec);
 }
 
-//TODO: ADD BOX COMMENT
-std::vector<float> rotate(float x, float y, float angle) //degrees to radians??
+//----------------------------------------------------------------
+// This function populates the 3x3 and 3x1 matrices required to
+// compute a rotation. 'angle' is in radians 
+//----------------------------------------------------------------
+std::vector<float> rotate(float x, float y, float angle)
 {
   std::vector<std::vector<float>> matrix = {
     {cosf(angle), -(sinf(angle)), 0},
@@ -54,7 +67,10 @@ std::vector<float> rotate(float x, float y, float angle) //degrees to radians??
   return matrixMultiply(matrix, vec);
 }
 
-//TODO: ADD BOX COMMENT
+//----------------------------------------------------------------
+// This function populates the 3x3 and 3x1 matrices required to 
+// compute a scale.
+//----------------------------------------------------------------
 std::vector<float> scale(const float x, const float y, const float x_sfact, const float y_sfact)
 {
   std::vector<std::vector<float>> matrix = {
@@ -70,7 +86,10 @@ std::vector<float> scale(const float x, const float y, const float x_sfact, cons
 }
 
 
-//TODO: ADD BOX COMMENT
+//----------------------------------------------------------------
+// This function takes the results matrix and displays the 
+// first(x) and second(y) element.
+//----------------------------------------------------------------
 void display_result(const std::vector<float>& vec)
 {
   std::cout << "\nNew X coordinate --- " << std::setprecision(6) << vec[0] << "\n";

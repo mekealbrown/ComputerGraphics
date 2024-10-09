@@ -1,9 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <cmath>
-#include <iomanip>
-#include <iostream>
 
 void pop_vec(std::vector<float>&, const float, const float);
 
