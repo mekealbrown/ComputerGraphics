@@ -3,7 +3,7 @@
 # from Eck's camera API.
 #---------------------------------------------------------------------
 
-a.out: lighted-prism.cpp camera.cpp camera.h
-	clear && g++ lighted-prism.cpp camera.cpp -lglut -lGL -lGLU
+a.out: scene.cpp camera.cpp camera.h
+	clear && g++ scene.cpp camera.cpp cylinder.cpp -lglut -lGL -lGLU
 clean:
 	rm -f a.out
