@@ -4,6 +4,6 @@
 #---------------------------------------------------------------------
 
 a.out: scene.cpp camera.cpp camera.h
-	clear && g++ scene.cpp camera.cpp cylinder.cpp -lglut -lGL -lGLU
+	clear && g++ scene.cpp camera.cpp shapes.cpp -lglut -lGL -lGLU
 clean:
 	rm -f a.out

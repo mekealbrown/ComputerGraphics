@@ -14,45 +14,70 @@
 #include <algorithm>
 
 #include "camera.h"
-#include "cylinder.hpp"
-
-const float CUBE_COLOR[] = { 0.7f, 0.0f, 0.7f, 1.0f };
-
+#include "shapes.hpp"
 
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    cameraSetLimits(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0); 
+    cameraSetLimits(-2.0, 2.0, -2.0, 2.0, -2.0, 2.0); 
     cameraApply();       
-
-    float background[] = {1.0f, 0.8f, 0.0f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, CUBE_COLOR);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, CUBE_COLOR);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, background);
-    glMaterialf(GL_FRONT, GL_SHININESS, 50.0F);
-    glColor3fv(CUBE_COLOR);
     
+    //table top
+    glPushMatrix();
+        glTranslatef(0.0f, 0.0f, -0.4f);
+        drawPrism(4, 1.0f, 0.05f, BROWN);
+    glPopMatrix();
 
-    drawPrism(4, 0.1f, 0.3f, CUBE_COLOR);
+    //leg 1
+    glPushMatrix();
+        glTranslatef(-0.8f, -0.5f, -0.4f);
+        glRotatef(15.0f, 0.0f, 0.0f, -1.0f);
+        drawPrism(100, 0.04f, 1.0f, BROWN);
+    glPopMatrix();
+
+    //leg 2
+    glPushMatrix();
+        glTranslatef(0.8f, -0.5f, -0.4f);
+        glRotatef(15.0f, 0.0f, 0.0f, 1.0f);
+        drawPrism(100, 0.04f, 1.0f, BROWN);
+    glPopMatrix();
+
+    //leg 3
+    glPushMatrix();
+        glTranslatef(0.0f, -0.5f, 0.4f);
+        glRotatef(15.0f, -1.0f, 0.0f, 0.0f);
+        drawPrism(100, 0.04f, 1.0f, BROWN);
+    glPopMatrix();
+
+    //leg 4
+    glPushMatrix();
+        glTranslatef(0.0f, -0.5f, -1.2f);
+        glRotatef(15.0f, 1.0f, 0.0f, 0.0f);
+        drawPrism(100, 0.04f, 1.0f, BROWN);
+    glPopMatrix();
 
     glPushMatrix();
-      glTranslatef(0.0f, 0.0f, -0.4f);
-      drawPrism(1000, 0.1f, 0.3f, CUBE_COLOR);
+        glTranslatef(0.0f, 0.5f, -0.4f);
+        drawOctagonalBipyramid(0.3f, 0.3f);
     glPopMatrix();
-    
+
     glFlush();
 }
 
 void init() {
     glutMouseFunc(trackballMouseFunction);
     glutMotionFunc(trackballMotionFunction);
+    
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_NORMALIZE);
 
-    glClearColor(1.0f, 0.8f, 0.0f, 1.0f); //gold..except it really just looks yellow
+    glClearColor(0.02f, 0.02f, 0.02f, 1.0f); //gold..except it really just looks yellow
 }
 
 int main(int argc, char** argv) {
