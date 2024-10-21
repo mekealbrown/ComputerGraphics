@@ -1,9 +1,25 @@
 #---------------------------------------------------------------------
-# Build the cube rotation application with the trackball capability
-# from Eck's camera API.
+# Builds the Lighted Scene program
+# Includes Eck's camera API
 #---------------------------------------------------------------------
 
-a.out: scene.cpp camera.cpp camera.h
-	clear && g++ scene.cpp camera.cpp shapes.cpp -lglut -lGL -lGLU
+CC = g++
+CFLAGS = -Wall -c
+LDFLAGS = -lglut -lGL -lGLU
+
+OBJS = scene.o camera.o shapes.o
+
+a.out: $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) -o a.out
+
+scene.o: scene.cpp
+	$(CC) $(CFLAGS) scene.cpp
+
+camera.o: camera.cpp camera.h
+	$(CC) $(CFLAGS) camera.cpp
+
+shapes.o: shapes.cpp shapes.hpp
+	$(CC) $(CFLAGS) shapes.cpp
+
 clean:
-	rm -f a.out
+	rm -f a.out $(OBJS)
