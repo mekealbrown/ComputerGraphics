@@ -1,3 +1,12 @@
+//-------------------------------------------------------------------------------
+// Developer -- Mekeal Brown
+// Course ----- CS3233
+// Project ---- Homework #4: Lighted Scene
+// Due Date --- October 23, 2024
+//
+// This program draws a lighted scene containing a table, an octagonal bipyramid,
+// an rotating light source, a Utah teapot, and some text.
+//-------------------------------------------------------------------------------
 #ifdef _WIN32
     #include <GL/glut.h>
 #elif __linux__
@@ -11,18 +20,22 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
-#include <algorithm>
 
 #include "camera.h"
 #include "shapes.hpp"
 
+//helpful globals
 float rotationAngle = 0.0f;
 int lastTime = 0;
 GLUquadric* quadric = nullptr;
 float lightX = -0.2f, lightY = 1.0f, lightZ = 0.5f;
 
-
-
+//--------------------------------------------------------------------
+// display()
+//
+// This function calls the functions responsible for drawing the 
+// objects to create the scene, along with setting up some state
+//--------------------------------------------------------------------
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
@@ -33,7 +46,9 @@ void display() {
     cameraSetLimits(-3.0, 3.0, -3.0, 3.0, -3.0, 3.0); 
     cameraApply();       
 
-    GLfloat light_position[] = {lightX, lightY, lightZ, 1.0f};
+    drawText(-1.0f, 2.0f, 0.0f, "So how are we all doing today");
+
+    float light_position[] = {lightX, lightY, lightZ, 1.0f};
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
     // sphere as "light source"
@@ -41,7 +56,6 @@ void display() {
         glTranslatef(lightX, lightY, lightZ);
         glDisable(GL_LIGHTING);
         glColor3f(1.0f, 1.0f, 0.0f);
-        glTranslatef(0.0f, 1.0f, 0.0f);
         gluSphere(quadric, 0.05, 32, 32);
         glEnable(GL_LIGHTING);
     glPopMatrix();
@@ -89,10 +103,28 @@ void display() {
         drawPyramid(8, 0.3f, -0.3f, PURPLE);
     glPopMatrix();
 
+    glPushMatrix();
+        float diffuseColor[] = {0.75f, 0.61f, 0.25f, 1.0f};
+        float specularColor[] = {1.0f, 1.0f, 0.0f, 1.0f}; // trying to get that shine
+        float ambientColor[] = {0.25f, 0.20f, 0.0f, 1.0f};
+
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseColor);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, specularColor);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, ambientColor);
+        glMaterialf(GL_FRONT, GL_SHININESS, 100.0f);
+        glTranslatef(-0.3f, 0.1f, 0.2f);
+        glutSolidTeapot(0.1);
+    glPopMatrix();
 
     glFlush();
 }
 
+
+//--------------------------------------------------------------------
+// update()
+//
+// This function updates position parameters for animated objects
+//--------------------------------------------------------------------
 void update(int value) {
     int currentTime = glutGet(GLUT_ELAPSED_TIME);
     float deltaTime = (currentTime - lastTime) / 1000.0f;
@@ -109,6 +141,12 @@ void update(int value) {
     glutTimerFunc(16, update, 0);
 }
 
+//--------------------------------------------------------------------
+// reshape()
+//
+// This function sets up how the scene is viewed and scaled when 
+// the window is resized
+//--------------------------------------------------------------------
 void reshape(int w, int h) {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
@@ -124,19 +162,18 @@ void init() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
-    glEnable(GL_NORMALIZE);
-
-    glEnable(GL_LIGHT1);
-    GLfloat light1_position[] = { 0.0f, 0.0f, 10.0f, 0.0f }; // w = 0 for directional
-    GLfloat light1_diffuse[] = { 1.0f, 1.0f ,1.0f, 1.0f};     // Red light
+    GLfloat light1_position[] = { 0.0f, 0.0f, 10.0f, 0.0f }; 
+    GLfloat light1_diffuse[] = { 1.0f, 1.0f ,1.0f, 1.0f}; 
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+
+    glEnable(GL_NORMALIZE);
     
     quadric = gluNewQuadric();
     gluQuadricDrawStyle(quadric, GLU_FILL);
     gluQuadricNormals(quadric, GLU_SMOOTH);
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //gold..except it really just looks yellow
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 }
 
 int main(int argc, char** argv) {
