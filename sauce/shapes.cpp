@@ -1,8 +1,8 @@
 //-------------------------------------------------------------------------------
 // Developer -- Mekeal Brown
 // Course ----- CS3233
-// Project ---- Homework #4: Lighted Scene
-// Due Date --- October 23, 2024
+// Project ---- Homework #5: Awesome Sauce
+// Due Date --- November 1, 2024
 //
 // Function definitions of helpful drawing functions declared in 'shapes.hpp'
 //-------------------------------------------------------------------------------
@@ -22,7 +22,15 @@
 #include "shapes.h"
 
 
-
+//-------------------------------------------------------------------------------
+// struct TexCoord2d
+//
+// This struct is used to define a 2d texture coordinate pair
+//
+// normalize()
+//
+// This function normalizes the texture coordinates to unit length.
+//-------------------------------------------------------------------------------
 struct TexCoord2d {
     float s, t;
     TexCoord2d(float s, float t) : s(s), t(t) {}
@@ -203,6 +211,12 @@ void drawText(float x, float y, float z, const char* text) {
   glPopMatrix();
 }
 
+//-------------------------------------------------------------------------------
+// drawTabascoBox()
+//
+// This function draws a rectangular prism and then texturizes it with a Tabasco
+// sauce box
+//-------------------------------------------------------------------------------
 void drawTabascoBox(float size)
 {
     glPushMatrix();

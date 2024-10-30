@@ -1,8 +1,8 @@
 //-------------------------------------------------------------------------------
 // Developer -- Mekeal Brown
 // Course ----- CS3233
-// Project ---- Homework #4: Lighted Scene
-// Due Date --- October 23, 2024
+// Project ---- Homework #5: Awesome Sauce
+// Due Date --- November 1, 2024
 //
 // Header file containing declarations of useful functions for drawing things.
 //-------------------------------------------------------------------------------
