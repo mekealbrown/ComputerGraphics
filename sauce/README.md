@@ -1,0 +1,1 @@
+My vote for next go-around's texture assignment is Led Zepplin's Physical Grafitti CD case. Probably the greatest album of all time.
