@@ -1,10 +1,10 @@
 #---------------------------------------------------------------------
 #-- Developer -- Mekeal Brown
 #-- Course ----- CS3233
-#-- Project ---- Homework #5: Awesome Sauce
+#-- Project ---- Homework #6: Take that!
 #-- Due Date --- November 1, 2024
 #--
-#-- Makefile to build the Awesome Sauce program
+#-- Makefile to build the Take that! program
 #-- Creates obj directory to hold generated object files to keep the
 #-- directory clean.
 #---------------------------------------------------------------------
